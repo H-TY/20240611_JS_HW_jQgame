@@ -383,6 +383,7 @@
       display: flex;
       justify-content: space-around;
       align-content: center;
+      margin-top: 5px;
     }
 
     .pair1 {
@@ -509,7 +510,7 @@
         <input type="button" value="X" id="closeBtn" class="closeBtnCss">
         <h2 class="gameRuleTitle">—　遊 戲 規 則　—</h2>
         <ol class="ruleDetails">
-          <li>下方為配對欄，當翻開 2 張互有關聯的物件時，游標會變為相對應的驅鬼物品。</li>
+          <li id="pairText">下方為配對欄，當翻開 2 張互有關聯的物件時，游標會變為相對應的驅鬼物品。</li>
           <div id="pair" class="pairCss">
             <div class="pair1">
               <img src="./images/item/1.png" class="ruleItemCss"> & <img src="./images/item/2.png" class="ruleItemCss">
@@ -580,10 +581,15 @@
     })
 
     // 配對圖示說明 code
-    const pairContent = $('#pair')
+    // 利用 .detach() 將 #pair 從原始位置移除（不刪除）
+    // 如果有做修改，有顯示的地方也會同步修改
+    const pairContent = $('#pair').detach()
 
     // 配對欄位插入配對提示圖示
-    $('#items').append(pairContent.addClass('pairTip'))
+    // 利用 .clone() 複製一個相同的物件
+    $('#items').append(pairContent.clone().addClass('pairTip'))
+    // 再將 .detach() 後的物件放回原來位置
+    $('#pairText').append(pairContent)
 
     // 點擊 Start 按鈕後，按鈕消失
     $('#btnStart').click(() => {
